@@ -1,11 +1,12 @@
 //Setting Up Express
 const express = require("express");
 const path = require("path");
+const bodyParser = require("body-parser");
 const server = express();
 
 //Middleware
 server.use(express.static(path.join(__dirname, "public")));
-
+server.use(bodyParser.urlencoded({ extended: false }));
 //Request Handling
 // const homePage =(req, res)=>{
 //     const homePagePath = path.join(__dirname, 'public', 'index.html')
@@ -28,6 +29,15 @@ server.use(express.static(path.join(__dirname, "public")));
 //     const contactPagePath = path.join(__dirname, 'public', 'contact.html')
 //     res.sendFile(contactPagePath)
 // }
+const loginHandler = (req, res) => {
+  console.log(req.body);
+  res.send("Logged in successfully");
+};
+
+const registerRequestHandler = (req, res) => {
+  console.log(req.body);
+  res.send("<h1>Registered Successfully</h1>");
+};
 
 //Routes
 // server.get('/', homePage)
@@ -35,6 +45,7 @@ server.use(express.static(path.join(__dirname, "public")));
 // server.get('/portfolio', portfolioPage)
 // server.get('/career', careerPage)
 // server.get('/contact', contactPage)
-
+server.post("/login", loginHandler);
+server.post("/register", registerRequestHandler);
 //Listening To Server
 server.listen(3001, () => console.log("Server Is Ready For Any Request"));
